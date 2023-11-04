@@ -57,3 +57,42 @@ Promise.all(numberPromises)
   
     })
     .catch(err => console.log("REJECTED!", err))
+
+// 3. Use API to get 4 facts on your favorite number. Once you have them all, put them on the page.
+
+const ol = document.querySelector("#three");
+const liOne = document.createElement("li");
+const liTwo = document.createElement("li");
+const liThree = document.createElement("li");
+const liFour = document.createElement("li");
+
+axios.get(url)
+.then(res => {
+    console.log("First Promise resolved")
+    console.log(res.data.text)
+    liOne.innerText = res.data.text;
+    ol.append(liOne)
+    return axios.get(url)
+})
+.then(res => {
+    console.log("Second Promise resolved")
+    console.log(res.data.text)
+    liTwo.innerText = res.data.text;
+    ol.append(liTwo)
+    return axios.get(url)
+})
+.then(res => {
+    console.log("Third Promise resolved")
+    console.log(res.data.text)
+    liThree.innerText = res.data.text;
+    ol.append(liThree)
+    return axios.get(url)
+})
+.then(res => {
+    console.log("Forth Promise resolved")
+    console.log(res.data.text)
+    liFour.innerText = res.data.text;
+    ol.append(liFour)
+    return axios.get(url)
+})
+.catch(err => console.log("REJECTED!", err))
