@@ -41,9 +41,49 @@ axios.get(url)
             for (res of chosenArr) {
                 let value = res.data.cards[0].value;
                 let suit = res.data.cards[0].suit;
+                //console.log(res.data.cards[0])
                 console.log(`Second round card value is ${value} and card suit is ${suit}`);
             }
         })
         .catch(err => console.log(err));
 })
 .catch(err => console.log("Rejected!", err))
+
+// 3. 
+
+const button = document.querySelector("button");
+const board = document.querySelector("#board")
+const body = document.querySelector("body");
+let deckid = null;
+
+axios.get(url)
+.then(res => {
+    deckid = res.data.deck_id;
+    //console.log(`Deck id is ${deckid}`);
+})
+.catch(err => console.log("Rejected!", err))
+
+button.addEventListener('click', () => {
+    console.log("Clicked!");
+    //console.log(`deckid is ${deckid}`);
+    axios.get(`https://deckofcardsapi.com/api/deck/${deckid}/draw/?count=1`)
+    .then( res => {
+        //console.log(res.data)
+        console.log(`Cards remaining: ${res.data.remaining}`)
+        let cardSrc = res.data.cards[0].image;
+        let angle = Math.random() * 90 -45;
+        let randomX = Math.random() * 40 - 20;
+        let randomY = Math.random() * 40 - 20;
+
+        const newImg = document.createElement("img");
+        newImg.setAttribute("src", cardSrc);
+        board.append(newImg);
+
+        if (res.data.remaining === 0) {
+            console.log("OUT OF CARDS!")
+             body.removeChild(button);
+        }
+    })
+    .catch( err => console.log("Rejected!", err)
+    );
+});
