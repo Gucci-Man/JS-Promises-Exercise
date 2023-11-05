@@ -1,10 +1,5 @@
 const div1 = document.querySelector("#one");
-
 const p = document.createElement("p");
-
-/* newLi.innerText = "Hello!";
-
-ul.append(newLi); */
 
 // 1. Get a fact about your favorite number (90)
 
